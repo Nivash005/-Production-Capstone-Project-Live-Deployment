@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#111827" />
+  <meta name="description" content="NovaCart — a responsive shopping capstone with a REST-powered catalog, simulated authentication, cart, checkout and order history." />
+  <title>NovaCart — Modern Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="NovaCart home"><span class="brand-mark">N</span><span>nova<span class="brand-light">cart</span></span></a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <button class="nav-link active" data-view="store">Discover</button>
+        <button class="nav-link" data-view="orders">My orders</button>
+      </nav>
+      <div class="top-actions">
+        <div class="user-chip" id="user-chip"><span class="avatar" id="user-avatar">G</span><span id="user-label">Guest</span><button id="auth-action" class="text-button">Sign in</button></div>
+        <button class="cart-button" id="open-cart" aria-label="Open shopping bag"><span class="bag-icon">▱</span><span>Bag</span><span class="cart-count" id="cart-count">0</span></button>
+      </div>
+    </header>
+
+    <main>
+      <section id="store-view" class="view">
+        <section class="hero">
+          <div class="hero-copy">
+            <div class="eyebrow"><span class="eyebrow-dot"></span> THE EVERYDAY EDITION</div>
+            <h1>Good things.<br><em>Great finds.</em></h1>
+            <p>A considered collection of the things you'll love using, wearing and keeping.</p>
+            <a class="hero-cta" href="#catalog">Explore the collection <span>↘</span></a>
+          </div>
+          <div class="hero-art" aria-label="Featured shopping collection">
+            <div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div>
+            <div class="hero-product product-a"><div class="product-shape"></div><span>01 / OBJECTS</span></div>
+            <div class="hero-product product-b"><div class="product-shape"></div><span>02 / ESSENTIALS</span></div>
+            <div class="hero-product product-c"><div class="product-shape"></div><span>03 / DETAILS</span></div>
+            <div class="hero-sticker">CURATED<br>FOR YOU <span>✳</span></div>
+          </div>
+          <div class="hero-index"><span>01</span><span class="index-line"></span><span>03</span></div>
+        </section>
+
+        <section class="catalog-section" id="catalog">
+          <div class="section-heading">
+            <div><div class="eyebrow muted">THE COLLECTION</div><h2>Find your next <em>favourite.</em></h2></div>
+            <p id="catalog-count">A fresh edit, just for you.</p>
+          </div>
+          <div class="toolbar">
+            <label class="search-box"><span aria-hidden="true">⌕</span><input id="search-input" type="search" placeholder="Search the collection..." autocomplete="off" aria-label="Search products"></label>
+            <div class="category-tabs" id="category-tabs" role="group" aria-label="Filter by category"><button class="category-tab active" data-category="all">All items</button></div>
+            <label class="sort-control"><span>Sort by</span><select id="sort-select" aria-label="Sort products"><option value="featured">Featured</option><option value="price-low">Price: low to high</option><option value="price-high">Price: high to low</option><option value="rating">Top rated</option></select></label>
+          </div>
+          <div id="status-banner" class="status-banner" role="status" hidden></div>
+          <div id="skeleton-grid" class="product-grid skeleton-grid" aria-label="Loading products">
+            <div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div><div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div><div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div><div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div><div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div><div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div><div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div><div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div>
+          </div>
+          <div id="product-grid" class="product-grid" aria-live="polite"></div>
+          <div id="empty-state" class="empty-state" hidden><span class="empty-icon">⌕</span><h3>No matches this time.</h3><p>Try another search or category.</p><button class="outline-button" id="clear-filters">Clear filters</button></div>
+        </section>
+      </section>
+
+      <section id="orders-view" class="view orders-view" hidden>
+        <div class="eyebrow muted">YOUR ACCOUNT</div><h1 class="page-title">Order <em>history.</em></h1><p class="page-intro">Everything you've chosen, all in one place.</p>
+        <div id="orders-list" class="orders-list"></div>
+        <div id="orders-empty" class="empty-state"><span class="empty-icon">↗</span><h3>Your next favourite is out there.</h3><p>Orders you place will show up here.</p><button class="solid-button" data-view="store">Browse collection</button></div>
+      </section>
+    </main>
+
+    <footer class="footer"><a class="brand footer-brand" href="#"><span class="brand-mark">N</span><span>nova<span class="brand-light">cart</span></span></a><span>Thoughtful finds for everyday life.</span><span>© <span id="year"></span> NovaCart</span></footer>
+  </div>
+
+  <div class="drawer-backdrop" id="drawer-backdrop"></div>
+  <aside class="cart-drawer" id="cart-drawer" aria-label="Shopping bag" aria-hidden="true">
+    <div class="drawer-header"><div><div class="eyebrow muted">YOUR SELECTION</div><h2>Shopping bag <span id="drawer-count">(0)</span></h2></div><button class="icon-button" id="close-cart" aria-label="Close shopping bag">×</button></div>
+    <div id="cart-items" class="cart-items"></div>
+    <div class="drawer-footer"><div class="subtotal"><span>Subtotal</span><strong id="cart-total">$0.00</strong></div><p class="shipping-note">Shipping and taxes calculated at checkout.</p><button class="checkout-button" id="checkout-button">Continue to checkout <span>→</span></button><button class="continue-button" id="continue-shopping">Continue shopping</button></div>
+  </aside>
+
+  <div class="modal-backdrop" id="auth-backdrop">
+    <section class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+      <button class="icon-button modal-close" id="close-auth" aria-label="Close sign in">×</button>
+      <div class="brand modal-brand"><span class="brand-mark">N</span><span>nova<span class="brand-light">cart</span></span></div>
+      <div class="eyebrow muted">WELCOME IN</div><h2 id="auth-title">Make yourself<br><em>at home.</em></h2><p>Enter your details to save your bag and keep track of orders.</p>
+      <form id="auth-form"><label>Your name<input id="auth-name" name="name" required minlength="2" placeholder="Alex Morgan"></label><label>Email address<input id="auth-email" name="email" type="email" required placeholder="alex@example.com"></label><button class="checkout-button" type="submit">Continue <span>→</span></button></form>
+      <small>This is a demo sign-in experience. It does not verify identity or protect accounts.</small>
+    </section>
+  </div>
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>
